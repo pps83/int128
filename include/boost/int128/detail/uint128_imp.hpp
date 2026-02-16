@@ -25,10 +25,8 @@ namespace boost {
 namespace int128 {
 
 BOOST_INT128_EXPORT struct
-    #if defined(BOOST_INT128_HAS_INT128) || defined(BOOST_INT128_HAS_MSVC_INT128)
+    #if (defined(BOOST_INT128_HAS_INT128) || defined(BOOST_INT128_HAS_MSVC_INT128)) && !defined(_M_IX86)
     alignas(alignof(detail::builtin_u128))
-    #else
-    alignas(16)
     #endif
 uint128_t
 {
