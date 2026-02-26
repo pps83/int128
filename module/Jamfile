@@ -28,3 +28,4 @@ obj int128 : int128.cxx : <toolset>msvc:<cxxflags>-interface ;
 
 run quick_test.cpp int128 : : : <dependency>int128 ;
 run ../test/test_bit.cpp int128 : : : <dependency>int128 ;
+run ../test/test_div.cpp int128 : : : <dependency>int128 ;
