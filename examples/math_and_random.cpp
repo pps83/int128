@@ -25,17 +25,6 @@
 #include <array>
 #include <random>
 
-// For some bizare reason that I can't figure out Clang-Cl x86 in Github Actions crashes only with C++14
-// I can't replicate this crash locally
-#if defined(_WIN32) && defined(__clang__) && defined(__cplusplus) && __cplusplus == 201402L
-
-int main()
-{
-    return 0;
-}
-
-#else
-
 int main()
 {
     // Setup our rng and distribution
@@ -56,5 +45,3 @@ int main()
 
     return 0;
 }
-
-#endif
