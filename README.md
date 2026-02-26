@@ -70,7 +70,7 @@ The entire library can be conveniently included with `#include <boost/int128.hpp
 
 # Full Documentation
 
-The complete documentation can be found at: https://master.int128.cpp.al
+The complete documentation can be found at: https://develop.int128.cpp.al
 
 ## References
 
