@@ -1855,7 +1855,7 @@ BOOST_INT128_EXPORT constexpr uint128_t operator<<(const uint128_t lhs, const ui
 {
     if (rhs.high > UINT64_C(0) || rhs.low >= UINT64_C(128))
     {
-        return 0;
+        return uint128_t{0};
     }
 
     return lhs << rhs.low;
@@ -2057,7 +2057,7 @@ BOOST_INT128_EXPORT constexpr uint128_t operator>>(const uint128_t lhs, const ui
 {
     if (rhs.high > UINT64_C(0) || rhs.low >= UINT64_C(128))
     {
-        return 0;
+        return uint128_t{0};
     }
 
     return lhs >> rhs.low;
