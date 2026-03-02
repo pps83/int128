@@ -59,7 +59,7 @@ constexpr bool operator==(const T lhs, const U rhs) noexcept
 
     #else
 
-    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    BOOST_INT128_IF_CONSTEXPR (std::is_same<T, int128_t>::value)
     {
         if (lhs < T{0})
         {
@@ -70,8 +70,6 @@ constexpr bool operator==(const T lhs, const U rhs) noexcept
     }
     else
     {
-        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
-
         if (rhs < T{0})
         {
             return false;
@@ -95,22 +93,20 @@ constexpr bool operator!=(const T lhs, const U rhs) noexcept
 
     #else
 
-    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    BOOST_INT128_IF_CONSTEXPR (std::is_same<T, int128_t>::value)
     {
         if (lhs < T{0})
         {
-            return false;
+            return true;
         }
 
         return static_cast<uint128_t>(lhs) != rhs;
     }
     else
     {
-        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
-
         if (rhs < T{0})
         {
-            return false;
+            return true;
         }
 
         return lhs != static_cast<uint128_t>(rhs);
@@ -131,7 +127,7 @@ constexpr bool operator<(const T lhs, const U rhs) noexcept
 
     #else
 
-    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    BOOST_INT128_IF_CONSTEXPR (std::is_same<T, int128_t>::value)
     {
         if (lhs < T{0})
         {
@@ -142,8 +138,6 @@ constexpr bool operator<(const T lhs, const U rhs) noexcept
     }
     else
     {
-        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
-
         if (rhs < T{0})
         {
             return false;
@@ -167,7 +161,7 @@ constexpr bool operator<=(const T lhs, const U rhs) noexcept
 
     #else
 
-    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    BOOST_INT128_IF_CONSTEXPR (std::is_same<T, int128_t>::value)
     {
         if (lhs < T{0})
         {
@@ -178,8 +172,6 @@ constexpr bool operator<=(const T lhs, const U rhs) noexcept
     }
     else
     {
-        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
-
         if (rhs < T{0})
         {
             return false;
@@ -203,7 +195,7 @@ constexpr bool operator>(const T lhs, const U rhs) noexcept
 
     #else
 
-    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    BOOST_INT128_IF_CONSTEXPR (std::is_same<T, int128_t>::value)
     {
         if (lhs < T{0})
         {
@@ -214,8 +206,6 @@ constexpr bool operator>(const T lhs, const U rhs) noexcept
     }
     else
     {
-        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
-
         if (rhs < T{0})
         {
             return true;
@@ -239,7 +229,7 @@ constexpr bool operator>=(const T lhs, const U rhs) noexcept
 
     #else
 
-    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    BOOST_INT128_IF_CONSTEXPR (std::is_same<T, int128_t>::value)
     {
         if (lhs < T{0})
         {
@@ -250,8 +240,6 @@ constexpr bool operator>=(const T lhs, const U rhs) noexcept
     }
     else
     {
-        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
-
         if (rhs < T{0})
         {
             return true;
