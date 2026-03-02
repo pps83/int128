@@ -42,46 +42,225 @@ constexpr uint128_t::uint128_t(const int128_t& v) noexcept : high {static_cast<s
 // Comparison Operators
 //=====================================
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator==(T, U) noexcept
+constexpr bool operator==(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
+
     static_assert(std::is_same<T, U>::value, "Sign Compare Error, cast one type to the other for this operation");
+    static_cast<void>(lhs);
+    static_cast<void>(rhs);
     return true;
+
+    #else
+
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    {
+        if (lhs < T{0})
+        {
+            return false;
+        }
+
+        return static_cast<uint128_t>(lhs) == rhs;
+    }
+    else
+    {
+        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
+
+        if (rhs < T{0})
+        {
+            return false;
+        }
+
+        return lhs == static_cast<uint128_t>(rhs);
+    }
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator!=(T, U) noexcept
+constexpr bool operator!=(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
+
     static_assert(std::is_same<T, U>::value, "Sign Compare Error, cast one type to the other for this operation");
+    static_cast<void>(lhs);
+    static_cast<void>(rhs);
     return true;
+
+    #else
+
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    {
+        if (lhs < T{0})
+        {
+            return false;
+        }
+
+        return static_cast<uint128_t>(lhs) != rhs;
+    }
+    else
+    {
+        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
+
+        if (rhs < T{0})
+        {
+            return false;
+        }
+
+        return lhs != static_cast<uint128_t>(rhs);
+    }
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator<(T, U) noexcept
+constexpr bool operator<(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
+
     static_assert(std::is_same<T, U>::value, "Sign Compare Error, cast one type to the other for this operation");
+    static_cast<void>(lhs);
+    static_cast<void>(rhs);
     return true;
+
+    #else
+
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    {
+        if (lhs < T{0})
+        {
+            return true;
+        }
+
+        return static_cast<uint128_t>(lhs) < rhs;
+    }
+    else
+    {
+        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
+
+        if (rhs < T{0})
+        {
+            return false;
+        }
+
+        return lhs < static_cast<uint128_t>(rhs);
+    }
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator<=(T, U) noexcept
+constexpr bool operator<=(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
+
     static_assert(std::is_same<T, U>::value, "Sign Compare Error, cast one type to the other for this operation");
+    static_cast<void>(lhs);
+    static_cast<void>(rhs);
     return true;
+
+    #else
+
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    {
+        if (lhs < T{0})
+        {
+            return true;
+        }
+
+        return static_cast<uint128_t>(lhs) <= rhs;
+    }
+    else
+    {
+        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
+
+        if (rhs < T{0})
+        {
+            return false;
+        }
+
+        return lhs <= static_cast<uint128_t>(rhs);
+    }
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator>(T, U) noexcept
+constexpr bool operator>(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
+
     static_assert(std::is_same<T, U>::value, "Sign Compare Error, cast one type to the other for this operation");
+    static_cast<void>(lhs);
+    static_cast<void>(rhs);
     return true;
+
+    #else
+
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    {
+        if (lhs < T{0})
+        {
+            return false;
+        }
+
+        return static_cast<uint128_t>(lhs) > rhs;
+    }
+    else
+    {
+        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
+
+        if (rhs < T{0})
+        {
+            return true;
+        }
+
+        return lhs > static_cast<uint128_t>(rhs);
+    }
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator>=(T, U) noexcept
+constexpr bool operator>=(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
+
     static_assert(std::is_same<T, U>::value, "Sign Compare Error, cast one type to the other for this operation");
+    static_cast<void>(lhs);
+    static_cast<void>(rhs);
     return true;
+
+    #else
+
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
+    {
+        if (lhs < T{0})
+        {
+            return false;
+        }
+
+        return static_cast<uint128_t>(lhs) >= rhs;
+    }
+    else
+    {
+        static_assert(std::numeric_limits<U>::is_signed, "Wrong sign detected. Please open a bug report at https://github.com/cppalliance/int128");
+
+        if (rhs < T{0})
+        {
+            return true;
+        }
+
+        return lhs >= static_cast<uint128_t>(rhs);
+    }
+
+    #endif
 }
 
 //=====================================
@@ -122,6 +301,10 @@ constexpr T operator%(T lhs, U) noexcept
     static_assert(std::is_same<T, U>::value, "Sign Conversion Error, cast one type to the other for this operation");
     return lhs;
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 } // namespace int128
 } // namespace boost
