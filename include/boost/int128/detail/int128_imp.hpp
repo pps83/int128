@@ -1541,7 +1541,7 @@ constexpr int128_t operator^(const UnsignedInteger lhs, const int128_t rhs) noex
     static_assert(detail::is_signed_integer_v<UnsignedInteger>, "Sign Conversion Error");
     static_cast<void>(lhs);
     static_cast<void>(rhs);
-    return true;
+    return int128_t{};
 
     #endif
 }

@@ -350,7 +350,7 @@ constexpr uint128_t lcm(uint128_t a, uint128_t b) noexcept
 {
     if (a == 0U || b == 0U)
     {
-        return 0;
+        return uint128_t{0};
     }
 
 
