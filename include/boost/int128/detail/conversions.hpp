@@ -256,38 +256,83 @@ constexpr bool operator>=(const T lhs, const U rhs) noexcept
 //=====================================
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr T operator+(T lhs, U) noexcept
+constexpr uint128_t operator+(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
+
     static_assert(std::is_same<T, U>::value, "Sign Conversion Error, cast one type to the other for this operation");
-    return lhs;
+    static_cast<void>(rhs);
+    return static_cast<uint128_t>(lhs);
+
+    #else
+
+    return static_cast<uint128_t>(lhs) + static_cast<uint128_t>(rhs);
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr T operator-(T lhs, U) noexcept
+constexpr uint128_t operator-(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
+
     static_assert(std::is_same<T, U>::value, "Sign Conversion Error, cast one type to the other for this operation");
-    return lhs;
+    static_cast<void>(rhs);
+    return static_cast<uint128_t>(lhs);
+
+    #else
+
+    return static_cast<uint128_t>(lhs) - static_cast<uint128_t>(rhs);
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr T operator*(T lhs, U) noexcept
+constexpr uint128_t operator*(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
+
     static_assert(std::is_same<T, U>::value, "Sign Conversion Error, cast one type to the other for this operation");
-    return lhs;
+    static_cast<void>(rhs);
+    return static_cast<uint128_t>(lhs);
+
+    #else
+
+    return static_cast<uint128_t>(lhs) * static_cast<uint128_t>(rhs);
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr T operator/(T lhs, U) noexcept
+constexpr uint128_t operator/(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
+
     static_assert(std::is_same<T, U>::value, "Sign Conversion Error, cast one type to the other for this operation");
-    return lhs;
+    static_cast<void>(rhs);
+    return static_cast<uint128_t>(lhs);
+
+    #else
+
+    return static_cast<uint128_t>(lhs) / static_cast<uint128_t>(rhs);
+
+    #endif
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr T operator%(T lhs, U) noexcept
+constexpr uint128_t operator%(const T lhs, const U rhs) noexcept
 {
+    #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
+
     static_assert(std::is_same<T, U>::value, "Sign Conversion Error, cast one type to the other for this operation");
-    return lhs;
+    static_cast<void>(rhs);
+    return static_cast<uint128_t>(lhs);
+
+    #else
+
+    return static_cast<uint128_t>(lhs) % static_cast<uint128_t>(rhs);
+
+    #endif
 }
 
 #ifdef _MSC_VER
