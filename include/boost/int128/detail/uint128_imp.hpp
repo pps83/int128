@@ -56,8 +56,8 @@ uint128_t
     constexpr uint128_t& operator=(const uint128_t&) noexcept = default;
     constexpr uint128_t& operator=(uint128_t&&) noexcept = default;
 
-    // Requires conversion file to be implemented
-    constexpr uint128_t(const int128_t& v) noexcept;
+    // Requires a conversion file to be implemented
+    explicit constexpr uint128_t(const int128_t& v) noexcept;
 
     // Construct from integral types
     #if BOOST_INT128_ENDIAN_LITTLE_BYTE
