@@ -9,6 +9,12 @@
 #include <random>
 #include <cmath>
 
+#ifdef __GNUC__
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wsign-compare"
+#  pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
 static std::mt19937_64 rng{42};
 static std::uniform_int_distribution<std::uint64_t> u_dist{0, static_cast<std::uint64_t>(std::sqrt(UINT64_MAX))};
 static std::uniform_int_distribution<std::int64_t> i_dist{0, static_cast<std::int64_t>(std::sqrt(INT64_MAX))};

@@ -8,6 +8,11 @@
 #include <boost/core/lightweight_test.hpp>
 #include <random>
 
+#ifdef __GNUC__
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wsign-compare"
+#endif
+
 static std::mt19937_64 rng{42};
 static std::uniform_int_distribution<std::uint64_t> u_dist{0, UINT64_MAX};
 static std::uniform_int_distribution<std::int64_t> i_dist{0, INT64_MAX};
