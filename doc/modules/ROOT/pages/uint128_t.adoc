@@ -57,12 +57,7 @@ If your platform has a native 128-bit unsigned integer, the struct is defined as
 struct alignas(alignof(unsigned __int128)) uint128_t
 ----
 
-Otherwise, it is
-
-[source, c++]
-----
-struct alignas(sizeof(std::uint64_t) * 2) uint128_t
-----
+Otherwise, it is left up to the compiler to decide.
 
 [#u128_operator_behavior]
 == Operator Behavior
