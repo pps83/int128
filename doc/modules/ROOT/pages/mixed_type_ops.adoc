@@ -165,3 +165,61 @@ If `lhs` is type `int128_t` returns `false` if `lhs < 0`
 If `rhs` is type `int128_t` returns `true` if `rhs < 0`
 Otherwise, returns the same as `static_cast<uint128_t>(lhs) pass:[>=] static_cast<uint128_t>(rhs)`.
 
+== Arithmetic
+
+If you define xref:config.adoc#sign_compare[`BOOST_INT128_ALLOW_SIGN_CONVERSION`], the operators have the following behavior.
+
+=== Addition
+
+[source, c++]
+----
+constexpr uint128_t operator+(uint128_t lhs, int128_t rhs);
+
+constexpr uint128_t operator+(int128_t lhs, uint128_t rhs);
+----
+
+Returns the same as `static_cast<uint128_t>(lhs) + static_cast<uint128_t>(rhs)`
+
+=== Subtraction
+
+[source, c++]
+----
+constexpr uint128_t operator-(uint128_t lhs, int128_t rhs);
+
+constexpr uint128_t operator-(int128_t lhs, uint128_t rhs);
+----
+
+Returns the same as `static_cast<uint128_t>(lhs) - static_cast<uint128_t>(rhs)`
+
+=== Multiplication
+
+[source, c++]
+----
+constexpr uint128_t operator*(uint128_t lhs, int128_t rhs);
+
+constexpr uint128_t operator*(int128_t lhs, uint128_t rhs);
+----
+
+Returns the same as `static_cast<uint128_t>(lhs) * static_cast<uint128_t>(rhs)`
+
+=== Division
+
+[source, c++]
+----
+constexpr uint128_t operator/(uint128_t lhs, int128_t rhs);
+
+constexpr uint128_t operator/(int128_t lhs, uint128_t rhs);
+----
+
+Returns the same as `static_cast<uint128_t>(lhs) / static_cast<uint128_t>(rhs)`
+
+=== Modulo
+
+[source, c++]
+----
+constexpr uint128_t operator%(uint128_t lhs, int128_t rhs);
+
+constexpr uint128_t operator%(int128_t lhs, uint128_t rhs);
+----
+
+Returns the same as `static_cast<uint128_t>(lhs) % static_cast<uint128_t>(rhs)`
