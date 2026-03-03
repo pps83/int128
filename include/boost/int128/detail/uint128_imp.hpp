@@ -56,8 +56,8 @@ uint128_t
     constexpr uint128_t& operator=(const uint128_t&) noexcept = default;
     constexpr uint128_t& operator=(uint128_t&&) noexcept = default;
 
-    // Requires conversion file to be implemented
-    constexpr uint128_t(const int128_t& v) noexcept;
+    // Requires a conversion file to be implemented
+    explicit constexpr uint128_t(const int128_t& v) noexcept;
 
     // Construct from integral types
     #if BOOST_INT128_ENDIAN_LITTLE_BYTE
@@ -1855,7 +1855,7 @@ BOOST_INT128_EXPORT constexpr uint128_t operator<<(const uint128_t lhs, const ui
 {
     if (rhs.high > UINT64_C(0) || rhs.low >= UINT64_C(128))
     {
-        return 0;
+        return uint128_t{0};
     }
 
     return lhs << rhs.low;
@@ -2057,7 +2057,7 @@ BOOST_INT128_EXPORT constexpr uint128_t operator>>(const uint128_t lhs, const ui
 {
     if (rhs.high > UINT64_C(0) || rhs.low >= UINT64_C(128))
     {
-        return 0;
+        return uint128_t{0};
     }
 
     return lhs >> rhs.low;

@@ -55,8 +55,8 @@ int128_t
     constexpr int128_t& operator=(const int128_t&) noexcept = default;
     constexpr int128_t& operator=(int128_t&&) noexcept = default;
 
-    // Requires conversion file to be implemented
-    constexpr int128_t(const uint128_t& v) noexcept;
+    // Requires a conversion file to be implemented
+    explicit constexpr int128_t(const uint128_t& v) noexcept;
 
     // Construct from integral types
     #if BOOST_INT128_ENDIAN_LITTLE_BYTE
@@ -1541,7 +1541,7 @@ constexpr int128_t operator^(const UnsignedInteger lhs, const int128_t rhs) noex
     static_assert(detail::is_signed_integer_v<UnsignedInteger>, "Sign Conversion Error");
     static_cast<void>(lhs);
     static_cast<void>(rhs);
-    return true;
+    return int128_t{};
 
     #endif
 }

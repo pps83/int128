@@ -51,7 +51,7 @@ void test_countl_zero()
 
 void test_bit_width()
 {
-    BOOST_TEST_EQ(boost::int128::bit_width(0), 0);
+    BOOST_TEST_EQ(boost::int128::bit_width(boost::int128::uint128_t{0}), 0);
 
     boost::int128::uint128_t x {1};
 
