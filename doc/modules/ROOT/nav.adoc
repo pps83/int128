@@ -29,6 +29,7 @@
 ** xref:api_reference.adoc#api_macros[Macros]
 *** xref:api_reference.adoc#api_macro_literals[Literals]
 *** xref:api_reference.adoc#api_macro_configuration[Configuration]
+** xref:api_reference.adoc#api_headers[Headers]
 * xref:uint128_t.adoc[]
 ** xref:uint128_t.adoc#u128_alignment[Alignment]
 ** xref:uint128_t.adoc#u128_operator_behavior[Operator Behavior]
