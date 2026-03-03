@@ -84,3 +84,84 @@ constexpr uint128_t operator%(int128_t lhs, uint128_t rhs);
 } // namespace boost
 
 ----
+
+== Comparisons
+
+If you define xref:config.adoc#sign_compare[`BOOST_INT128_ALLOW_SIGN_COMPARE`], the operators have the following behavior.
+
+=== Equality
+
+[source, c++]
+----
+constexpr bool operator==(uint128_t lhs, int128_t rhs);
+
+constexpr bool operator==(int128_t lhs, uint128_t rhs);
+----
+
+If the `int128_t` argument is less than 0 returns `false`.
+Otherwise, returns the same as `static_cast<uint128_t>(lhs) == static_cast<uint128_t>(rhs)`.
+
+=== Inequality
+
+[source, c++]
+----
+constexpr bool operator!=(uint128_t lhs, int128_t rhs);
+
+constexpr bool operator!=(int128_t lhs, uint128_t rhs);
+----
+
+If the `int128_t` argument is less than 0 returns `false`.
+Otherwise, returns the same as `static_cast<uint128_t>(lhs) != static_cast<uint128_t>(rhs)`.
+
+=== Less Than
+
+[source, c++]
+----
+constexpr bool operator<(uint128_t lhs, int128_t rhs);
+
+constexpr bool operator<(int128_t lhs, uint128_t rhs);
+----
+
+If `lhs` is type `int128_t` returns `true` if `lhs < 0`
+If `rhs` is type `int128_t` returns `false` if `rhs < 0`
+Otherwise, returns the same as `static_cast<uint128_t>(lhs) < static_cast<uint128_t>(rhs)`.
+
+=== Less Than or Equal To
+
+[source, c++]
+----
+constexpr bool operator<=(uint128_t lhs, int128_t rhs);
+
+constexpr bool operator<=(int128_t lhs, uint128_t rhs);
+----
+
+If `lhs` is type `int128_t` returns `true` if `lhs < 0`
+If `rhs` is type `int128_t` returns `false` if `rhs < 0`
+Otherwise, returns the same as `static_cast<uint128_t>(lhs) pass:[<=] static_cast<uint128_t>(rhs)`.
+
+=== Greater Than
+
+[source, c++]
+----
+constexpr bool operator>(uint128_t lhs, int128_t rhs);
+
+constexpr bool operator>(int128_t lhs, uint128_t rhs);
+----
+
+If `lhs` is type `int128_t` returns `false` if `lhs < 0`
+If `rhs` is type `int128_t` returns `true` if `rhs < 0`
+Otherwise, returns the same as `static_cast<uint128_t>(lhs) > static_cast<uint128_t>(rhs)`.
+
+=== Less Than or Equal To
+
+[source, c++]
+----
+constexpr bool operator>=(uint128_t lhs, int128_t rhs);
+
+constexpr bool operator>=(int128_t lhs, uint128_t rhs);
+----
+
+If `lhs` is type `int128_t` returns `false` if `lhs < 0`
+If `rhs` is type `int128_t` returns `true` if `rhs < 0`
+Otherwise, returns the same as `static_cast<uint128_t>(lhs) pass:[>=] static_cast<uint128_t>(rhs)`.
+
