@@ -335,40 +335,40 @@ Listed by analogous STL header.
 | `<boost/int128.hpp>`
 | Convenience header including the entire library
 
-| `<boost/int128/bit.hpp>`
-| xref:api_bit[Bit manipulation functions]
+| xref:bit.adoc[`<boost/int128/bit.hpp>`]
+| Bit manipulation functions
 
-| `<boost/int128/charconv.hpp>`
-| xref:api_charconv[Character Conversion Functions]
+| xref:charconv.adoc[`<boost/int128/charconv.hpp>`]
+| Character conversion functions
 
 | `<boost/int128/climits.hpp>`
-| Min and Max Macros
+| Min and max macros
 
-| `<boost/int128/cstdlib.hpp>`
-| xref:api_cstdlib[Combined division and modulo function]
+| xref:cstdlib.adoc[`<boost/int128/cstdlib.hpp>`]
+| Combined division and modulo function
 
-| `<boost/int128/fmt_format.hpp>`
-| xref:api_formatting[Formating integration for pass:[{fmt}]]
+| xref:format.adoc#fmt_format[`<boost/int128/fmt_format.hpp>`]
+| Formatting integration for pass:[{fmt}]
 
-| `<boost/int128/format.hpp>`
-| xref:api_formatting[Formating integration for pass:[C++20] `<format>`]
+| xref:format.adoc#std_format[`<boost/int128/format.hpp>`]
+| Formatting integration for pass:[C++20] `<format>`
 
-| `<boost/int128/int128.hpp>`
-| xref:api_types[The int128_t and uint128_t types]
+| xref:uint128_t.adoc[`<boost/int128/int128.hpp>`]
+| The `int128_t` and `uint128_t` types
 
-| `<boost/int128/iostream.hpp>`
-| xref:api_iostream[Iostream overloads for int128_t and uint128_t]
+| xref:stream.adoc[`<boost/int128/iostream.hpp>`]
+| Iostream overloads for `int128_t` and `uint128_t`
 
 | `<boost/int128/limits.hpp>`
 | Overloads for `std::numeric_limits` for `int128_t` and `uint128_t`
 
-| `<boost/int128/literals.hpp>`
-| xref:api_literals[User-defined literals for int128_t and uint128_t]
+| xref:literals.adoc[`<boost/int128/literals.hpp>`]
+| User-defined literals for `int128_t` and `uint128_t`
 
-| `<boost/int128/numeric.hpp>`
-| xref:api_numeric[Numeric algorithms (gcd, lcm, midpoint)]
+| xref:numeric.adoc[`<boost/int128/numeric.hpp>`]
+| Numeric algorithms (gcd, lcm, midpoint)
 
-| `<boost/int128/string.hpp>`
-| xref:api_string[to_string overloads]
+| xref:string.adoc[`<boost/int128/string.hpp>`]
+| `to_string` overloads
 
 |===
