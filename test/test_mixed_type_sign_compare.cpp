@@ -30,12 +30,12 @@ void test_left_unsigned()
         const uint128_t lib_lhs {lhs};
         const int128_t lib_rhs {rhs};
 
-        BOOST_TEST_EQ(lib_lhs == lib_rhs, lhs == rhs);
-        BOOST_TEST_EQ(lib_lhs != lib_rhs, lhs != rhs);
-        BOOST_TEST_EQ(lib_lhs > lib_rhs, lhs > rhs);
-        BOOST_TEST_EQ(lib_lhs >= lib_rhs, lhs >= rhs);
-        BOOST_TEST_EQ(lib_lhs < lib_rhs, lhs < rhs);
-        BOOST_TEST_EQ(lib_lhs <= lib_rhs, lhs <= rhs);
+        BOOST_TEST_EQ(lib_lhs == lib_rhs, lhs == static_cast<std::uint64_t>(rhs));
+        BOOST_TEST_EQ(lib_lhs != lib_rhs, lhs != static_cast<std::uint64_t>(rhs));
+        BOOST_TEST_EQ(lib_lhs > lib_rhs, lhs > static_cast<std::uint64_t>(rhs));
+        BOOST_TEST_EQ(lib_lhs >= lib_rhs, lhs >= static_cast<std::uint64_t>(rhs));
+        BOOST_TEST_EQ(lib_lhs < lib_rhs, lhs < static_cast<std::uint64_t>(rhs));
+        BOOST_TEST_EQ(lib_lhs <= lib_rhs, lhs <= static_cast<std::uint64_t>(rhs));
     }
 
     const uint128_t lhs {42u};
@@ -59,12 +59,12 @@ void test_right_unsigned()
         const int128_t lib_lhs {lhs};
         const uint128_t lib_rhs {rhs};
 
-        BOOST_TEST_EQ(lib_lhs == lib_rhs, lhs == rhs);
-        BOOST_TEST_EQ(lib_lhs != lib_rhs, lhs != rhs);
-        BOOST_TEST_EQ(lib_lhs > lib_rhs, lhs > rhs);
-        BOOST_TEST_EQ(lib_lhs >= lib_rhs, lhs >= rhs);
-        BOOST_TEST_EQ(lib_lhs < lib_rhs, lhs < rhs);
-        BOOST_TEST_EQ(lib_lhs <= lib_rhs, lhs <= rhs);
+        BOOST_TEST_EQ(lib_lhs == lib_rhs, static_cast<std::uint64_t>(lhs) == rhs);
+        BOOST_TEST_EQ(lib_lhs != lib_rhs, static_cast<std::uint64_t>(lhs) != rhs);
+        BOOST_TEST_EQ(lib_lhs > lib_rhs, static_cast<std::uint64_t>(lhs) > rhs);
+        BOOST_TEST_EQ(lib_lhs >= lib_rhs, static_cast<std::uint64_t>(lhs) >= rhs);
+        BOOST_TEST_EQ(lib_lhs < lib_rhs, static_cast<std::uint64_t>(lhs) < rhs);
+        BOOST_TEST_EQ(lib_lhs <= lib_rhs, static_cast<std::uint64_t>(lhs) <= rhs);
     }
 
     const int128_t lhs {-42};
