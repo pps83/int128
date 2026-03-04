@@ -371,4 +371,7 @@ Listed by analogous STL header.
 | xref:string.adoc[`<boost/int128/string.hpp>`]
 | `to_string` overloads
 
+| `<boost/int128/random.hpp>`
+| Required for usage of Boost.Random
+
 |===
