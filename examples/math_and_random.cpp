@@ -6,7 +6,7 @@
 #define BOOST_INT128_ALLOW_SIGN_CONVERSION
 
 #include <boost/int128.hpp>
-#include <boost/int128/random.hpp>
+#include <boost/int128/random.hpp> // Not included in the convenience header, but needed for boost.random interop
 
 #ifdef __clang__
 #pragma clang diagnostic push
