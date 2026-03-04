@@ -6,6 +6,7 @@
 #define BOOST_INT128_ALLOW_SIGN_CONVERSION
 
 #include <boost/int128.hpp>
+#include <boost/int128/random.hpp>
 
 #ifdef __clang__
 #pragma clang diagnostic push
