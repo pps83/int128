@@ -126,7 +126,7 @@ struct uint128_t
     constexpr uint128_t& operator=(const uint128_t&) noexcept = default;
     constexpr uint128_t& operator=(uint128_t&&) noexcept = default;
 
-    constexpr uint128_t(const int128_t& v) noexcept;
+    explicit constexpr uint128_t(const int128_t& v) noexcept;
 
     // Construct from integral types
     constexpr uint128_t(const std::uint64_t hi, const std::uint64_t lo) noexcept;
