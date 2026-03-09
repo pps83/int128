@@ -32,7 +32,7 @@ BOOST_INT128_INLINE_CONSTEXPR int index64[64] = {
     13, 18,  8, 12,  7,  6,  5, 63
 };
 
-constexpr int bit_scan_reverse(std::uint64_t bb) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int bit_scan_reverse(std::uint64_t bb) noexcept
 {
     constexpr auto debruijn64 {UINT64_C(0x03f79d71b4cb0a89)};
 
@@ -56,7 +56,7 @@ BOOST_INT128_INLINE_CONSTEXPR int countl_mod37[37] = {
     27, 12, 24, 13, 14, 0
 };
 
-constexpr int backup_countl_impl(std::uint32_t x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int backup_countl_impl(std::uint32_t x) noexcept
 {
     x |= x >> 1;
     x |= x >> 2;
@@ -69,24 +69,24 @@ constexpr int backup_countl_impl(std::uint32_t x) noexcept
 
 #if BOOST_INT128_HAS_BUILTIN(__builtin_clz)
 
-constexpr int countl_impl(unsigned int x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(unsigned int x) noexcept
 {
     return x ? __builtin_clz(x) : std::numeric_limits<unsigned int>::digits;
 }
 
-constexpr int countl_impl(unsigned long x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(unsigned long x) noexcept
 {
     return x ? __builtin_clzl(x) : std::numeric_limits<unsigned long>::digits;
 }
 
-constexpr int countl_impl(unsigned long long x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(unsigned long long x) noexcept
 {
     return x ? __builtin_clzll(x) : std::numeric_limits<unsigned long long>::digits;
 }
 
 #elif (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION)
 
-constexpr int countl_impl(std::uint32_t x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint32_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -107,7 +107,7 @@ constexpr int countl_impl(std::uint32_t x) noexcept
     }
 }
 
-constexpr int countl_impl(std::uint64_t x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint64_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -130,7 +130,7 @@ constexpr int countl_impl(std::uint64_t x) noexcept
 
 #elif defined(_M_IX86) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION)
 
-constexpr int countl_impl(std::uint32_t x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint32_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -151,7 +151,7 @@ constexpr int countl_impl(std::uint32_t x) noexcept
     }
 }
 
-constexpr int countl_impl(std::uint64_t x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint64_t x) noexcept
 {
     return x ? bit_scan_reverse(static_cast<std::uint64_t>(x)) ^ 63 : std::numeric_limits<std::uint64_t>::digits;
 }
@@ -159,12 +159,12 @@ constexpr int countl_impl(std::uint64_t x) noexcept
 #else
 
 template <typename T>
-constexpr int countl_impl(T x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(T x) noexcept
 {
     return x ? bit_scan_reverse(static_cast<std::uint64_t>(x)) ^ 63 : std::numeric_limits<T>::digits;
 }
 
-constexpr int countl_impl(std::uint32_t x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint32_t x) noexcept
 {
     return backup_countl_impl(x);
 }
@@ -175,7 +175,7 @@ constexpr int countl_impl(std::uint32_t x) noexcept
 } // namespace impl
 
 template <typename T>
-constexpr int countl_zero(T x) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int countl_zero(T x) noexcept
 {
     static_assert(std::numeric_limits<T>::is_integer && !std::numeric_limits<T>::is_signed,
                   "Can only count with unsigned integers");

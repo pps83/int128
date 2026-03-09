@@ -26,7 +26,7 @@ BOOST_INT128_INLINE_CONSTEXPR char upper_case_digit_table[] = {
 
 static_assert(sizeof(upper_case_digit_table) == sizeof(char) * 16, "10 numbers, and 6 letters");
 
-constexpr char* mini_to_chars(char (&buffer)[64], uint128_t v, const int base, const bool uppercase) noexcept
+BOOST_INT128_HOST_DEVICE constexpr char* mini_to_chars(char (&buffer)[64], uint128_t v, const int base, const bool uppercase) noexcept
 {
     char* last {buffer + 64U};
     *--last = '\0';
@@ -81,7 +81,7 @@ constexpr char* mini_to_chars(char (&buffer)[64], uint128_t v, const int base, c
     return last;
 }
 
-constexpr char* mini_to_chars(char (&buffer)[64], const int128_t v, const int base, const bool uppercase) noexcept
+BOOST_INT128_HOST_DEVICE constexpr char* mini_to_chars(char (&buffer)[64], const int128_t v, const int base, const bool uppercase) noexcept
 {
     char* p {nullptr};
 

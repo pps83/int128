@@ -26,15 +26,15 @@ BOOST_INT128_INLINE_CONSTEXPR bool is_valid_overload_v = valid_overload<T>::valu
 
 #if BOOST_INT128_ENDIAN_LITTLE_BYTE
 
-constexpr int128_t::int128_t(const uint128_t& v) noexcept : low {v.low}, high {static_cast<std::int64_t>(v.high)} {}
+BOOST_INT128_HOST_DEVICE constexpr int128_t::int128_t(const uint128_t& v) noexcept : low {v.low}, high {static_cast<std::int64_t>(v.high)} {}
 
-constexpr uint128_t::uint128_t(const int128_t& v) noexcept : low {v.low}, high {static_cast<std::uint64_t>(v.high)} {}
+BOOST_INT128_HOST_DEVICE constexpr uint128_t::uint128_t(const int128_t& v) noexcept : low {v.low}, high {static_cast<std::uint64_t>(v.high)} {}
 
 #else
 
-constexpr int128_t::int128_t(const uint128_t& v) noexcept : high {static_cast<std::int64_t>(v.high)}, low {v.low} {}
+BOOST_INT128_HOST_DEVICE constexpr int128_t::int128_t(const uint128_t& v) noexcept : high {static_cast<std::int64_t>(v.high)}, low {v.low} {}
 
-constexpr uint128_t::uint128_t(const int128_t& v) noexcept : high {static_cast<std::uint64_t>(v.high)}, low {v.low} {}
+BOOST_INT128_HOST_DEVICE constexpr uint128_t::uint128_t(const int128_t& v) noexcept : high {static_cast<std::uint64_t>(v.high)}, low {v.low} {}
 
 #endif // BOOST_INT128_ENDIAN_LITTLE_BYTE
 
@@ -48,7 +48,7 @@ constexpr uint128_t::uint128_t(const int128_t& v) noexcept : high {static_cast<s
 #endif
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator==(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr bool operator==(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
 
@@ -82,7 +82,7 @@ constexpr bool operator==(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator!=(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr bool operator!=(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
 
@@ -116,7 +116,7 @@ constexpr bool operator!=(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator<(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr bool operator<(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
 
@@ -150,7 +150,7 @@ constexpr bool operator<(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator<=(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr bool operator<=(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
 
@@ -184,7 +184,7 @@ constexpr bool operator<=(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator>(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr bool operator>(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
 
@@ -218,7 +218,7 @@ constexpr bool operator>(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr bool operator>=(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr bool operator>=(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_COMPARE
 
@@ -256,7 +256,7 @@ constexpr bool operator>=(const T lhs, const U rhs) noexcept
 //=====================================
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr uint128_t operator+(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr uint128_t operator+(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
 
@@ -272,7 +272,7 @@ constexpr uint128_t operator+(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr uint128_t operator-(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr uint128_t operator-(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
 
@@ -288,7 +288,7 @@ constexpr uint128_t operator-(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr uint128_t operator*(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr uint128_t operator*(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
 
@@ -304,7 +304,7 @@ constexpr uint128_t operator*(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr uint128_t operator/(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr uint128_t operator/(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
 
@@ -320,7 +320,7 @@ constexpr uint128_t operator/(const T lhs, const U rhs) noexcept
 }
 
 template <typename T, typename U, std::enable_if_t<detail::is_valid_overload_v<T> && detail::is_valid_overload_v<U> && !std::is_same<T, U>::value, bool> = true>
-constexpr uint128_t operator%(const T lhs, const U rhs) noexcept
+BOOST_INT128_HOST_DEVICE constexpr uint128_t operator%(const T lhs, const U rhs) noexcept
 {
     #ifndef BOOST_INT128_ALLOW_SIGN_CONVERSION
 
