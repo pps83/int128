@@ -3342,15 +3342,15 @@ public:
     static constexpr bool tinyness_before = false;
 
     // Member functions
-    static constexpr auto (min)        () -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto lowest       () -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto (max)        () -> boost::int128::uint128_t { return {UINT64_MAX, UINT64_MAX}; }
-    static constexpr auto epsilon      () -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto round_error  () -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto infinity     () -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto quiet_NaN    () -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto signaling_NaN() -> boost::int128::uint128_t { return {0, 0}; }
-    static constexpr auto denorm_min   () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto (min)        () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto lowest       () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto (max)        () -> boost::int128::uint128_t { return {UINT64_MAX, UINT64_MAX}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto epsilon      () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto round_error  () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto infinity     () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto quiet_NaN    () -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto signaling_NaN() -> boost::int128::uint128_t { return {0, 0}; }
+    BOOST_INT128_HOST_DEVICE static constexpr auto denorm_min   () -> boost::int128::uint128_t { return {0, 0}; }
 };
 
 #if !defined(__cpp_inline_variables) || __cpp_inline_variables < 201606L
