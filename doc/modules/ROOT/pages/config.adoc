@@ -42,3 +42,7 @@ This macro will automatically be defined in the presence of `-fno-exceptions` or
 - `BOOST_INT128_ENDIAN_LITTLE_BYTE`: This is defined to `1` when compiling on a little endian architecture, otherwise `0`.
 
 - `BOOST_INT128_ENDIAN_BIG_BYTE`: This is defined to `1` when compiling on a big endian architecture, otherwise `0`.
+
+[#host_device]
+- `BOOST_INT128_HOST_DEVICE`: This is defined to `pass:[__host__ __device__]` when compiling with NVCC (`pass:[__NVCC__]` is defined), and to nothing otherwise.
+All public functions, constructors, operators, and conversion operators in the library are annotated with this macro, allowing `int128_t` and `uint128_t` to be used in CUDA device code without modification.

@@ -323,6 +323,9 @@ Listed by analogous STL header.
 
 | xref:config.adoc#automatic_config[`BOOST_INT128_ENDIAN_BIG_BYTE`]
 | Defined on big-endian systems
+
+| xref:config.adoc#host_device[`BOOST_INT128_HOST_DEVICE`]
+| Expands to `pass:[__host__ __device__]` under NVCC for CUDA support
 |===
 
 [#api_headers]
