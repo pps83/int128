@@ -49,11 +49,11 @@ int128_t
     #endif
 
     // Defaulted basic construction
-    BOOST_INT128_HOST_DEVICE constexpr int128_t() noexcept = default;
-    BOOST_INT128_HOST_DEVICE constexpr int128_t(const int128_t&) noexcept = default;
-    BOOST_INT128_HOST_DEVICE constexpr int128_t(int128_t&&) noexcept = default;
-    BOOST_INT128_HOST_DEVICE constexpr int128_t& operator=(const int128_t&) noexcept = default;
-    BOOST_INT128_HOST_DEVICE constexpr int128_t& operator=(int128_t&&) noexcept = default;
+    constexpr int128_t() noexcept = default;
+    constexpr int128_t(const int128_t&) noexcept = default;
+    constexpr int128_t(int128_t&&) noexcept = default;
+    constexpr int128_t& operator=(const int128_t&) noexcept = default;
+    constexpr int128_t& operator=(int128_t&&) noexcept = default;
 
     // Requires a conversion file to be implemented
     BOOST_INT128_HOST_DEVICE explicit constexpr int128_t(const uint128_t& v) noexcept;
