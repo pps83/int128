@@ -285,4 +285,10 @@ using builtin_u128 = std::_Unsigned128;
 #  endif
 #endif
 
+#ifdef __NVCC__
+#  define BOOST_INT128_HOST_DEVICE __host__ __device__
+#else
+#  define BOOST_INT128_HOST_DEVICE
+#endif
+
 #endif // BOOST_INT128_DETAIL_CONFIG_HPP
