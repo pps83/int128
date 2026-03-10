@@ -1788,10 +1788,21 @@ BOOST_INT128_HOST_DEVICE constexpr uint128_t default_ls_impl(const uint128_t lhs
 template <typename T>
 BOOST_INT128_HOST_DEVICE uint128_t intrinsic_ls_impl(const uint128_t lhs, const T rhs) noexcept
 {
-    if (BOOST_INT128_UNLIKELY(rhs >= 128 || rhs < 0))
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<T>::is_signed)
     {
-        return {0, 0};
+        if (BOOST_INT128_UNLIKELY(rhs >= 128 || rhs < 0))
+        {
+            return {0, 0};
+        }
     }
+    else
+    {
+        if (BOOST_INT128_UNLIKELY(rhs >= 128))
+        {
+            return {0, 0};
+        }
+    }
+
     if (BOOST_INT128_UNLIKELY(rhs == 0))
     {
         return lhs;
@@ -2005,10 +2016,21 @@ BOOST_INT128_HOST_DEVICE constexpr uint128_t default_rs_impl(const uint128_t lhs
 template <typename Integer>
 BOOST_INT128_HOST_DEVICE uint128_t intrinsic_rs_impl(const uint128_t lhs, const Integer rhs) noexcept
 {
-    if (BOOST_INT128_UNLIKELY(rhs >= 128 || rhs < 0))
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<Integer>::is_signed)
     {
-        return {0, 0};
+        if (BOOST_INT128_UNLIKELY(rhs >= 128 || rhs < 0))
+        {
+            return {0, 0};
+        }
     }
+    else
+    {
+        if (BOOST_INT128_UNLIKELY(rhs >= 128))
+        {
+            return {0, 0};
+        }
+    }
+
     if (BOOST_INT128_UNLIKELY(rhs == 0))
     {
         return lhs;
