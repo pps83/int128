@@ -13,3 +13,7 @@ run test_unsigned_add.cu ;
 run test_signed_add.cu ;
 run test_unsigned_sub.cu ;
 run test_signed_sub.cu ;
+run test_unsigned_mul.cu ;
+run test_signed_mul.cu ;
+run test_unsigned_div.cu ;
+run test_signed_div.cu ;
