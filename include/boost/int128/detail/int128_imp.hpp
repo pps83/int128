@@ -117,7 +117,11 @@ int128_t
     // but can be constexpr at C++11 instead of C++26
     BOOST_INT128_HOST_DEVICE explicit constexpr operator float() const noexcept;
     BOOST_INT128_HOST_DEVICE explicit constexpr operator double() const noexcept;
-    BOOST_INT128_HOST_DEVICE explicit constexpr operator long double() const noexcept;
+
+    // Long double does not exist on device
+    #ifndef __NVCC__
+    explicit constexpr operator long double() const noexcept;
+    #endif
 
     // Compound Or
     template <BOOST_INT128_DEFAULTED_INTEGER_CONCEPT>
@@ -292,10 +296,14 @@ BOOST_INT128_HOST_DEVICE constexpr int128_t::operator double() const noexcept
     return static_cast<double>(high) * detail::offset_value_v<double> + static_cast<double>(low);
 }
 
-BOOST_INT128_HOST_DEVICE constexpr int128_t::operator long double() const noexcept
+#ifndef __NVCC__
+
+constexpr int128_t::operator long double() const noexcept
 {
     return static_cast<long double>(high) * detail::offset_value_v<long double> + static_cast<long double>(low);
 }
+
+#endif
 
 //=====================================
 // Unary Operators
