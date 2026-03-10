@@ -1741,9 +1741,19 @@ BOOST_INT128_HOST_DEVICE constexpr uint128_t default_ls_impl(const uint128_t lhs
 {
     static_assert(std::is_integral<Integer>::value, "Needs to be a builtin type");
 
-    if (rhs < 0 || rhs >= 128)
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<Integer>::is_signed)
     {
-        return {0, 0};
+        if (rhs < 0 || rhs >= 128)
+        {
+            return {0, 0};
+        }
+    }
+    else
+    {
+        if (rhs >= 128)
+        {
+            return {0, 0};
+        }
     }
 
     if (rhs == 0)
@@ -1948,9 +1958,19 @@ namespace detail {
 template <typename Integer>
 BOOST_INT128_HOST_DEVICE constexpr uint128_t default_rs_impl(const uint128_t lhs, const Integer rhs) noexcept
 {
-    if (rhs < 0 || rhs >= 128)
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<Integer>::is_signed)
     {
-        return {0, 0};
+        if (rhs < 0 || rhs >= 128)
+        {
+            return {0, 0};
+        }
+    }
+    else
+    {
+        if (rhs >= 128)
+        {
+            return {0, 0};
+        }
     }
 
     if (rhs == 0)

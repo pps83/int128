@@ -1637,9 +1637,19 @@ BOOST_INT128_HOST_DEVICE constexpr int128_t default_ls_impl(const int128_t lhs, 
 {
     static_assert(std::is_integral<Integer>::value, "Only builtin types allowed");
 
-    if (rhs < 0 || rhs >= 128)
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<Integer>::is_signed)
     {
-        return {0, 0};
+        if (rhs < 0 || rhs >= 128)
+        {
+            return {0, 0};
+        }
+    }
+    else
+    {
+        if (rhs >= 128)
+        {
+            return {0, 0};
+        }
     }
 
     if (rhs == 0)
