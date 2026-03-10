@@ -12,6 +12,7 @@
 #include <random>
 #include <limits>
 #include <boost/int128.hpp>
+#include <boost/int128/random.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
 #include "cuda_managed_ptr.hpp"
 #include "stopwatch.hpp"
