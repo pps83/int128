@@ -22,7 +22,7 @@ BOOST_INT128_EXPORT struct i128div_t
     int128_t rem;
 };
 
-BOOST_INT128_EXPORT constexpr u128div_t div(const uint128_t x, const uint128_t y) noexcept
+BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr u128div_t div(const uint128_t x, const uint128_t y) noexcept
 {
     if (BOOST_INT128_UNLIKELY(x == 0U || y == 0U))
     {
@@ -54,7 +54,7 @@ BOOST_INT128_EXPORT constexpr u128div_t div(const uint128_t x, const uint128_t y
     }
 }
 
-BOOST_INT128_EXPORT constexpr i128div_t div(const int128_t x, const int128_t y) noexcept
+BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr i128div_t div(const int128_t x, const int128_t y) noexcept
 {
     if (BOOST_INT128_UNLIKELY(x == 0 || y == 0))
     {

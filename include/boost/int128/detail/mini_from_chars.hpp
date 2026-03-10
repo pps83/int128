@@ -43,13 +43,13 @@ BOOST_INT128_INLINE_CONSTEXPR unsigned char uchar_values[] =
 static_assert(sizeof(uchar_values) == 256, "uchar_values should represent all 256 values of unsigned char");
 
 // Convert characters for 0-9, A-Z, a-z to 0-35. Anything else is 255
-BOOST_INT128_FORCE_INLINE constexpr auto digit_from_char(char val) noexcept -> unsigned char
+BOOST_INT128_HOST_DEVICE BOOST_INT128_FORCE_INLINE constexpr auto digit_from_char(char val) noexcept -> unsigned char
 {
     return uchar_values[static_cast<unsigned char>(val)];
 }
 
 template <typename Integer, typename Unsigned_Integer>
-constexpr int from_chars_integer_impl(const char* first, const char* last, Integer& value, int base) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int from_chars_integer_impl(const char* first, const char* last, Integer& value, int base) noexcept
 {
     if (first >= last)
     {
@@ -176,12 +176,12 @@ constexpr int from_chars_integer_impl(const char* first, const char* last, Integ
 }
 } // namespace impl
 
-constexpr int from_chars(const char* first, const char* last, uint128_t& value, int base = 10) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int from_chars(const char* first, const char* last, uint128_t& value, int base = 10) noexcept
 {
     return impl::from_chars_integer_impl<uint128_t, uint128_t>(first, last, value, base);
 }
 
-constexpr int from_chars(const char* first, const char* last, int128_t& value, int base = 10) noexcept
+BOOST_INT128_HOST_DEVICE constexpr int from_chars(const char* first, const char* last, int128_t& value, int base = 10) noexcept
 {
     return impl::from_chars_integer_impl<int128_t, uint128_t>(first, last, value, base);
 }

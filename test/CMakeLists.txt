@@ -7,6 +7,25 @@ include(BoostTestJamfile OPTIONAL RESULT_VARIABLE HAVE_BOOST_TEST)
 
 if(HAVE_BOOST_TEST)
 
-    boost_test_jamfile(FILE Jamfile LINK_LIBRARIES Boost::int128 Boost::core Boost::random Boost::multiprecision Boost::mp11 Boost::charconv)
+    enable_testing()
+
+    if(BOOST_INT128_ENABLE_CUDA)
+
+        message(STATUS "Building Boost.int128 with CUDA")
+
+        find_package(CUDA REQUIRED)
+        enable_language(CUDA)
+        set(CMAKE_CUDA_EXTENSIONS OFF)
+
+        enable_testing()
+
+        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random ${CUDA_LIBRARIES} INCLUDE_DIRECTORIES ${CUDA_INCLUDE_DIRS}  )
+
+
+    else()
+
+        boost_test_jamfile(FILE Jamfile LINK_LIBRARIES Boost::int128 Boost::core Boost::random Boost::multiprecision Boost::mp11 Boost::charconv)
+
+    endif()
 
 endif()
