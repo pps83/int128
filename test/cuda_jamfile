@@ -17,3 +17,5 @@ run test_unsigned_mul.cu ;
 run test_signed_mul.cu ;
 run test_unsigned_div.cu ;
 run test_signed_div.cu ;
+run test_unsigned_mod.cu ;
+run test_signed_mod.cu ;
