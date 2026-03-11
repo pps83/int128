@@ -1945,9 +1945,19 @@ BOOST_INT128_HOST_DEVICE constexpr int128_t default_rs_impl(const int128_t lhs, 
 template <typename Integer>
 BOOST_INT128_HOST_DEVICE int128_t intrinsic_rs_impl(const int128_t lhs, const Integer rhs) noexcept
 {
-    if (BOOST_INT128_UNLIKELY(rhs >= 128 || rhs < 0))
+    BOOST_INT128_IF_CONSTEXPR (std::numeric_limits<Integer>::is_signed)
     {
-        return {0, 0};
+        if (rhs >= 128 || rhs < 0)
+        {
+            return lhs.high < 0 ? int128_t{-1, UINT64_MAX} : int128_t{0, 0};
+        }
+    }
+    else
+    {
+        if (rhs >= 128)
+        {
+            return lhs.high < 0 ? int128_t{-1, UINT64_MAX} : int128_t{0, 0};
+        }
     }
 
     #ifdef BOOST_INT128_HAS_INT128
