@@ -45,3 +45,6 @@ run test_rotl.cu ;
 run test_rotr.cu ;
 run test_popcount.cu ;
 run test_byteswap.cu ;
+
+run test_unsigned_cstdlib_div.cu ;
+run test_signed_cstdlib_div.cu ;
