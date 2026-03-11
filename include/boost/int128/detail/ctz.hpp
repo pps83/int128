@@ -20,24 +20,26 @@ namespace detail {
 
 namespace impl {
 
-#if BOOST_INT128_HAS_BUILTIN(__builtin_ctz)
+#if BOOST_INT128_HAS_BUILTIN(__builtin_ctz) && !defined(__NVCC__)
 
-BOOST_INT128_HOST_DEVICE constexpr int countr_impl(unsigned int x) noexcept
+constexpr int countr_impl(unsigned int x) noexcept
 {
     return x ? __builtin_ctz(x) : std::numeric_limits<unsigned int>::digits;
 }
 
-BOOST_INT128_HOST_DEVICE constexpr int countr_impl(unsigned long x) noexcept
+constexpr int countr_impl(unsigned long x) noexcept
 {
     return x ? __builtin_ctzl(x) : std::numeric_limits<unsigned long>::digits;
 }
 
-BOOST_INT128_HOST_DEVICE constexpr int countr_impl(unsigned long long x) noexcept
+constexpr int countr_impl(unsigned long long x) noexcept
 {
     return x ? __builtin_ctzll(x) : std::numeric_limits<unsigned long long>::digits;
 }
 
 #endif
+
+#ifndef __NVCC__
 
 BOOST_INT128_INLINE_CONSTEXPR int countr_mod37[37] = {
     32, 0, 1, 26, 2, 23, 27, 0,
@@ -47,12 +49,14 @@ BOOST_INT128_INLINE_CONSTEXPR int countr_mod37[37] = {
     5, 20, 8, 19, 18
 };
 
+#endif
+
 #if defined(_MSC_VER) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !BOOST_INT128_HAS_BUILTIN(__builtin_ctz)
 
 #pragma warning(push)
 #pragma warning(disable : 4146) // unary minus operator applied to unsigned type, result still unsigned
 
-BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
+constexpr int countr_impl(std::uint32_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -75,7 +79,7 @@ BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
 
 #pragma warning(pop)
 
-#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz)
+#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) || defined(__NVCC__)
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -84,6 +88,18 @@ BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
 
 BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
 {
+    #ifdef __NVCC__
+
+    constexpr int countr_mod37[37] = {
+        32, 0, 1, 26, 2, 23, 27, 0,
+        3, 16, 24, 30, 28, 11, 0, 13,
+        4, 7, 17, 0, 25, 22, 31, 15,
+        29, 10, 12, 6, 0, 21, 14, 9,
+        5, 20, 8, 19, 18
+    };
+
+    #endif
+
     return countr_mod37[(-x & x) % 37];
 }
 
@@ -93,9 +109,9 @@ BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
 
 #endif
 
-#if (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !BOOST_INT128_HAS_BUILTIN(__builtin_ctz)
+#if (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) && !defined(__NVCC__)
 
-BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint64_t x) noexcept
+constexpr int countr_impl(std::uint64_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -116,7 +132,7 @@ BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint64_t x) noexcept
     }
 }
 
-#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz)
+#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) || defined(__NVCC__)
 
 BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint64_t x) noexcept
 {

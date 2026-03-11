@@ -65,7 +65,7 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t rotr(const uint
     return x >> (static_cast<unsigned>(s) & mask) | x << (static_cast<unsigned>(-s) & mask);
 }
 
-#if BOOST_INT128_HAS_BUILTIN(__builtin_popcountll)
+#if BOOST_INT128_HAS_BUILTIN(__builtin_popcountll) && !defined(__NVCC__)
 
 BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int popcount(const uint128_t x) noexcept
 {
@@ -139,7 +139,7 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int popcount(const uint12
     }
 }
 
-#elif !BOOST_INT128_HAS_BUILTIN(__builtin_popcountll)
+#elif !BOOST_INT128_HAS_BUILTIN(__builtin_popcountll) || defined(__NVCC__)
 
 BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int popcount(const uint128_t x) noexcept
 {
@@ -148,7 +148,7 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int popcount(const uint12
 
 #endif
 
-#if BOOST_INT128_HAS_BUILTIN(__builtin_bswap64)
+#if BOOST_INT128_HAS_BUILTIN(__builtin_bswap64) && !defined(__NVCC__)
 
 BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t byteswap(const uint128_t x) noexcept
 {
@@ -187,7 +187,7 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t byteswap(const 
     }
 }
 
-#elif !BOOST_INT128_HAS_BUILTIN(__builtin_bswap64)
+#elif !BOOST_INT128_HAS_BUILTIN(__builtin_bswap64) || defined(__NVCC__)
 
 BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t byteswap(const uint128_t x) noexcept
 {
