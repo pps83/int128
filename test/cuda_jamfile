@@ -32,3 +32,16 @@ run test_unsigned_left_shift.cu ;
 run test_signed_left_shift.cu ;
 run test_unsigned_right_shift.cu ;
 run test_signed_right_shift.cu ;
+
+run test_has_single_bit.cu ;
+run test_countl_zero.cu ;
+run test_countl_one.cu ;
+run test_bit_width.cu ;
+run test_bit_ceil.cu ;
+run test_bit_floor.cu ;
+run test_countr_zero.cu ;
+run test_countr_one.cu ;
+run test_rotl.cu ;
+run test_rotr.cu ;
+run test_popcount.cu ;
+run test_byteswap.cu ;
