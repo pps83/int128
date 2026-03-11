@@ -20,6 +20,8 @@ namespace detail {
 
 namespace impl {
 
+#ifndef __NVCC__
+
 // See: http://graphics.stanford.edu/~seander/bithacks.html#IntegerLogDeBruijn
 BOOST_INT128_INLINE_CONSTEXPR int index64[64] = {
     0, 47,  1, 56, 48, 27,  2, 60,
@@ -32,8 +34,25 @@ BOOST_INT128_INLINE_CONSTEXPR int index64[64] = {
     13, 18,  8, 12,  7,  6,  5, 63
 };
 
+#endif
+
 BOOST_INT128_HOST_DEVICE constexpr int bit_scan_reverse(std::uint64_t bb) noexcept
 {
+    #ifdef __NVCC__
+
+    constexpr int index64[64] = {
+        0, 47,  1, 56, 48, 27,  2, 60,
+        57, 49, 41, 37, 28, 16,  3, 61,
+        54, 58, 35, 52, 50, 42, 21, 44,
+        38, 32, 29, 23, 17, 11,  4, 62,
+        46, 55, 26, 59, 40, 36, 15, 53,
+        34, 51, 20, 43, 31, 22, 10, 45,
+        25, 39, 14, 33, 19, 30,  9, 24,
+        13, 18,  8, 12,  7,  6,  5, 63
+    };
+
+    #endif
+
     constexpr auto debruijn64 {UINT64_C(0x03f79d71b4cb0a89)};
 
     BOOST_INT128_ASSUME(bb != 0); // LCOV_EXCL_LINE
@@ -48,6 +67,8 @@ BOOST_INT128_HOST_DEVICE constexpr int bit_scan_reverse(std::uint64_t bb) noexce
     return index64[(bb * debruijn64) >> 58];
 }
 
+#ifndef __NVCC__
+
 BOOST_INT128_INLINE_CONSTEXPR int countl_mod37[37] = {
     32, 31, 6, 30, 9, 5, 0, 29,
     16, 8, 2, 4, 21, 0, 19, 28,
@@ -56,8 +77,22 @@ BOOST_INT128_INLINE_CONSTEXPR int countl_mod37[37] = {
     27, 12, 24, 13, 14, 0
 };
 
+#endif
+
 BOOST_INT128_HOST_DEVICE constexpr int backup_countl_impl(std::uint32_t x) noexcept
 {
+    #ifdef __NVCC__
+
+    constexpr int countl_mod37[37] = {
+        32, 31, 6, 30, 9, 5, 0, 29,
+        16, 8, 2, 4, 21, 0, 19, 28,
+        25, 15, 0, 7, 10, 1, 17, 3,
+        22, 20, 26, 0, 11, 18, 23,
+        27, 12, 24, 13, 14, 0
+    };
+
+    #endif
+
     x |= x >> 1;
     x |= x >> 2;
     x |= x >> 4;
@@ -67,26 +102,26 @@ BOOST_INT128_HOST_DEVICE constexpr int backup_countl_impl(std::uint32_t x) noexc
     return countl_mod37[x % 37];
 }
 
-#if BOOST_INT128_HAS_BUILTIN(__builtin_clz)
+#if BOOST_INT128_HAS_BUILTIN(__builtin_clz) && !defined(__NVCC__)
 
-BOOST_INT128_HOST_DEVICE constexpr int countl_impl(unsigned int x) noexcept
+constexpr int countl_impl(unsigned int x) noexcept
 {
     return x ? __builtin_clz(x) : std::numeric_limits<unsigned int>::digits;
 }
 
-BOOST_INT128_HOST_DEVICE constexpr int countl_impl(unsigned long x) noexcept
+constexpr int countl_impl(unsigned long x) noexcept
 {
     return x ? __builtin_clzl(x) : std::numeric_limits<unsigned long>::digits;
 }
 
-BOOST_INT128_HOST_DEVICE constexpr int countl_impl(unsigned long long x) noexcept
+constexpr int countl_impl(unsigned long long x) noexcept
 {
     return x ? __builtin_clzll(x) : std::numeric_limits<unsigned long long>::digits;
 }
 
-#elif (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION)
+#elif (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !defined(__NVCC__)
 
-BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint32_t x) noexcept
+constexpr int countl_impl(std::uint32_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -107,7 +142,7 @@ BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint32_t x) noexcept
     }
 }
 
-BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint64_t x) noexcept
+constexpr int countl_impl(std::uint64_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
@@ -130,7 +165,7 @@ BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint64_t x) noexcept
 
 #elif defined(_M_IX86) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION)
 
-BOOST_INT128_HOST_DEVICE constexpr int countl_impl(std::uint32_t x) noexcept
+constexpr int countl_impl(std::uint32_t x) noexcept
 {
     if (BOOST_INT128_IS_CONSTANT_EVALUATED(x))
     {
