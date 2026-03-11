@@ -148,7 +148,7 @@ struct int128_t
     // Conversion to float
     BOOST_INT128_HOST_DEVICE explicit constexpr operator float() const noexcept;
     BOOST_INT128_HOST_DEVICE explicit constexpr operator double() const noexcept;
-    BOOST_INT128_HOST_DEVICE explicit constexpr operator long double() const noexcept;
+    explicit constexpr operator long double() const noexcept; // There are no long doubles on device
 };
 
 } // namespace int128
