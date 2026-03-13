@@ -115,7 +115,9 @@ BOOST_INT128_HOST_DEVICE constexpr int128_t sub_sat(const int128_t x, const int1
     if (x <= 0 && y >= 0)
     {
         // Underflow case
-        const auto res {x - y};
+        const auto big_x {static_cast<uint128_t>(x)};
+        const auto big_y {static_cast<uint128_t>(y)};
+        const auto res {static_cast<int128_t>(big_x - big_y)};
         return res > x ? (std::numeric_limits<int128_t>::min)() : res;
     }
     else if (x > 0 && y < 0)
