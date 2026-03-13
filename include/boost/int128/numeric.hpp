@@ -84,40 +84,52 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t sub_sat(const u
 
 BOOST_INT128_HOST_DEVICE constexpr int128_t add_sat(const int128_t x, const int128_t y) noexcept
 {
-    const auto result {x + y};
+    // Detect overflow BEFORE the addition to avoid signed overflow UB.
+    // When both are non-negative: overflow iff x > max - y (subtraction safe: max - non_negative >= 0)
+    // When both are negative: overflow iff x < min - y (subtraction safe: min - negative > min)
+    // Mixed signs: overflow is impossible.
 
-    // Positive overflow: both non-negative but result wrapped to negative
-    if (x.high >= 0 && y.high >= 0 && result.high < 0)
+    if (x.high >= 0 && y.high >= 0)
     {
-        return (std::numeric_limits<int128_t>::max)();
+        if (x > (std::numeric_limits<int128_t>::max)() - y)
+        {
+            return (std::numeric_limits<int128_t>::max)();
+        }
+    }
+    else if (x.high < 0 && y.high < 0)
+    {
+        if (x < (std::numeric_limits<int128_t>::min)() - y)
+        {
+            return (std::numeric_limits<int128_t>::min)();
+        }
     }
 
-    // Negative overflow: both negative but result wrapped to non-negative
-    if (x.high < 0 && y.high < 0 && result.high >= 0)
-    {
-        return (std::numeric_limits<int128_t>::min)();
-    }
-
-    return result;
+    return x + y;
 }
 
 BOOST_INT128_HOST_DEVICE constexpr int128_t sub_sat(const int128_t x, const int128_t y) noexcept
 {
-    const auto result {x - y};
+    // Detect overflow BEFORE the subtraction to avoid signed overflow UB.
+    // Positive overflow: x >= 0 and y < 0 and x > max + y (safe: max + negative < max)
+    // Negative overflow: x < 0 and y >= 0 and x < min + y (safe: min + non_negative > min)
+    // Same signs: overflow is impossible.
 
-    // Positive overflow: positive minus negative but result wrapped to negative
-    if (x.high >= 0 && y.high < 0 && result.high < 0)
+    if (x.high >= 0 && y.high < 0)
     {
-        return (std::numeric_limits<int128_t>::max)();
+        if (x > (std::numeric_limits<int128_t>::max)() + y)
+        {
+            return (std::numeric_limits<int128_t>::max)();
+        }
+    }
+    else if (x.high < 0 && y.high >= 0)
+    {
+        if (x < (std::numeric_limits<int128_t>::min)() + y)
+        {
+            return (std::numeric_limits<int128_t>::min)();
+        }
     }
 
-    // Negative overflow: negative minus non-negative but result wrapped to non-negative
-    if (x.high < 0 && y.high >= 0 && result.high >= 0)
-    {
-        return (std::numeric_limits<int128_t>::min)();
-    }
-
-    return result;
+    return x - y;
 }
 
 #ifdef _MSC_VER
