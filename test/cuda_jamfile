@@ -61,3 +61,6 @@ run test_signed_ge.cu ;
 
 run test_unsigned_cstdlib_div.cu ;
 run test_signed_cstdlib_div.cu ;
+
+run test_signed_to_unsigned_conversion.cu ;
+run test_unsigned_to_signed_conversion.cu ;
