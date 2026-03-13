@@ -76,9 +76,6 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t sub_sat(const u
     return z;
 }
 
-BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int128_t add_sat(int128_t x, int128_t y) noexcept;
-BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int128_t sub_sat(int128_t x, int128_t y) noexcept;
-
 #ifdef _MSC_VER
 #  pragma warning(push)
 #  pragma warning(disable : 4307) // Addition Overflow
