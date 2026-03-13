@@ -76,9 +76,6 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr uint128_t sub_sat(const u
     return z;
 }
 
-BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int128_t add_sat(int128_t x, int128_t y) noexcept;
-BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int128_t sub_sat(int128_t x, int128_t y) noexcept;
-
 #ifdef _MSC_VER
 #  pragma warning(push)
 #  pragma warning(disable : 4307) // Addition Overflow
@@ -87,54 +84,52 @@ BOOST_INT128_EXPORT BOOST_INT128_HOST_DEVICE constexpr int128_t sub_sat(int128_t
 
 BOOST_INT128_HOST_DEVICE constexpr int128_t add_sat(const int128_t x, const int128_t y) noexcept
 {
-    if (x >= 0 && y >= 0)
-    {
-        constexpr auto max_value {static_cast<uint128_t>((std::numeric_limits<int128_t>::max)())};
-        const auto big_x {static_cast<uint128_t>(x)};
-        const auto big_y {static_cast<uint128_t>(y)};
-        const auto big_res {big_x + big_y};
+    // Detect overflow BEFORE the addition to avoid signed overflow UB.
+    // When both are non-negative: overflow iff x > max - y (subtraction safe: max - non_negative >= 0)
+    // When both are negative: overflow iff x < min - y (subtraction safe: min - negative > min)
+    // Mixed signs: overflow is impossible.
 
-        return big_res > max_value ? (std::numeric_limits<int128_t>::max)() : static_cast<int128_t>(big_res);
-    }
-    else if ((x < 0 && y > 0) || (x > 0 && y < 0))
+    if (x.high >= 0 && y.high >= 0)
     {
-        return x + y;
+        if (x > (std::numeric_limits<int128_t>::max)() - y)
+        {
+            return (std::numeric_limits<int128_t>::max)();
+        }
     }
-    else
+    else if (x.high < 0 && y.high < 0)
     {
-        // x < 0 and y < 0
-        // Nearly the same technique as the positive values case
-        constexpr auto max_value {-static_cast<uint128_t>((std::numeric_limits<int128_t>::min)())};
-        const auto big_x {static_cast<uint128_t>(abs(x))};
-        const auto big_y {static_cast<uint128_t>(abs(y))};
-        const auto big_res {big_x + big_y};
+        if (x < (std::numeric_limits<int128_t>::min)() - y)
+        {
+            return (std::numeric_limits<int128_t>::min)();
+        }
+    }
 
-        return big_res > max_value ? (std::numeric_limits<int128_t>::min)() : -static_cast<int128_t>(big_res);
-    }
+    return x + y;
 }
 
 BOOST_INT128_HOST_DEVICE constexpr int128_t sub_sat(const int128_t x, const int128_t y) noexcept
 {
-    if (x <= 0 && y >= 0)
-    {
-        // Underflow case
-        const auto res {x - y};
-        return res > x ? (std::numeric_limits<int128_t>::min)() : res;
-    }
-    else if (x > 0 && y < 0)
-    {
-        // Overflow Case
-        constexpr auto max_val {static_cast<uint128_t>((std::numeric_limits<int128_t>::max)())};
-        const auto big_x {static_cast<uint128_t>(x)};
-        const auto big_y {-static_cast<uint128_t>(y)};
-        const auto res {big_x + big_y};
+    // Detect overflow BEFORE the subtraction to avoid signed overflow UB.
+    // Positive overflow: x >= 0 and y < 0 and x > max + y (safe: max + negative < max)
+    // Negative overflow: x < 0 and y >= 0 and x < min + y (safe: min + non_negative > min)
+    // Same signs: overflow is impossible.
 
-        return (res > max_val || res < big_x) ? (std::numeric_limits<int128_t>::max)() : static_cast<int128_t>(res);
-    }
-    else
+    if (x.high >= 0 && y.high < 0)
     {
-        return x - y;
+        if (x > (std::numeric_limits<int128_t>::max)() + y)
+        {
+            return (std::numeric_limits<int128_t>::max)();
+        }
     }
+    else if (x.high < 0 && y.high >= 0)
+    {
+        if (x < (std::numeric_limits<int128_t>::min)() + y)
+        {
+            return (std::numeric_limits<int128_t>::min)();
+        }
+    }
+
+    return x - y;
 }
 
 #ifdef _MSC_VER
@@ -404,11 +399,17 @@ BOOST_INT128_HOST_DEVICE constexpr int128_t midpoint(const int128_t a, const int
     // For signed integers, we use a + (b - a) / 2 or a - (a - b) / 2
     // The subtraction is done in unsigned arithmetic to handle overflow correctly
     // Integer division automatically rounds toward the first argument
+    //
+    // Use direct field access for both the uint128 construction and the
+    // comparison to avoid NVCC host compiler issues with operator<= and
+    // static_cast on int128_t for large-magnitude values
 
-    const auto ua {static_cast<uint128_t>(a)};
-    const auto ub {static_cast<uint128_t>(b)};
+    const uint128_t ua {static_cast<std::uint64_t>(a.high), a.low};
+    const uint128_t ub {static_cast<std::uint64_t>(b.high), b.low};
 
-    if (a <= b)
+    const bool a_le_b {a.high == b.high ? a.low <= b.low : a.high < b.high};
+
+    if (a_le_b)
     {
         // diff = b - a (computed in unsigned, handles wrap-around correctly)
         const auto diff {ub - ua};
