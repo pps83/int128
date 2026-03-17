@@ -38,6 +38,22 @@ struct make_signed<int128::uint128_t> { using type = int128::int128_t; };
 template <>
 struct make_signed<int128::int128_t> { using type = int128::int128_t; };
 
+#ifdef __NVCC__
+
+template <>
+__host__ __device__ constexpr int128::uint128_t get_max_value<int128::uint128_t>()
+{
+    return std::numeric_limits<int128::uint128_t>::max();
+}
+
+template <>
+__host__ __device__ constexpr int128::int128_t get_max_value<int128::int128_t>()
+{
+    return std::numeric_limits<int128::int128_t>::max();
+}
+
+#endif // __NVCC__
+
 #ifndef __NVCC__
 
 BOOST_INT128_INLINE_CONSTEXPR int128::uint128_t int128_pow10[39] =
