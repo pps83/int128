@@ -79,3 +79,13 @@ run test_unsigned_lcm.cu ;
 run test_signed_lcm.cu ;
 run test_unsigned_midpoint.cu ;
 run test_signed_midpoint.cu ;
+
+run test_unsigned_to_chars.cu ;
+run test_signed_to_chars.cu ;
+run test_unsigned_from_chars.cu ;
+run test_signed_from_chars.cu ;
+
+run test_unsigned_to_chars_bases.cu ;
+run test_signed_to_chars_bases.cu ;
+run test_unsigned_from_chars_bases.cu ;
+run test_signed_from_chars_bases.cu ;

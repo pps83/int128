@@ -19,9 +19,8 @@ if(HAVE_BOOST_TEST)
 
         enable_testing()
 
-        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random ${CUDA_LIBRARIES} INCLUDE_DIRECTORIES ${CUDA_INCLUDE_DIRS}  )
-
-
+        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random Boost::charconv ${CUDA_LIBRARIES} INCLUDE_DIRECTORIES ${CUDA_INCLUDE_DIRS}  )
+        
     else()
 
         boost_test_jamfile(FILE Jamfile LINK_LIBRARIES Boost::int128 Boost::core Boost::random Boost::multiprecision Boost::mp11 Boost::charconv)
