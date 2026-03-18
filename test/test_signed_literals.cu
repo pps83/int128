@@ -33,17 +33,17 @@ __global__ void cuda_test(int128_t *out)
 {
     int i = threadIdx.x;
 
-    // operator""_i128(const char*) - raw literal
+    // operator""_i128(const char*) - raw literal (values must fit unsigned long long to avoid NVCC warnings)
     if (i == 0) { out[i] = 0_i128; }
     if (i == 1) { out[i] = 1_i128; }
-    if (i == 2) { out[i] = 170141183460469231731687303715884105727_i128; }
+    if (i == 2) { out[i] = 18446744073709551615_i128; }
     if (i == 3) { out[i] = 999999999999999999_i128; }
     if (i == 4) { out[i] = 42_i128; }
 
-    // operator""_I128(const char*) - raw literal
+    // operator""_I128(const char*) - raw literal (values must fit unsigned long long to avoid NVCC warnings)
     if (i == 5) { out[i] = 0_I128; }
     if (i == 6) { out[i] = 1_I128; }
-    if (i == 7) { out[i] = 170141183460469231731687303715884105727_I128; }
+    if (i == 7) { out[i] = 18446744073709551615_I128; }
     if (i == 8) { out[i] = 999999999999999999_I128; }
     if (i == 9) { out[i] = 42_I128; }
 
@@ -102,17 +102,17 @@ int main(void)
     // Build expected values on host using the same literals
     int128_t expected[NUM_TESTS];
 
-    // operator""_i128(const char*) - raw literal
+    // operator""_i128(const char*) - raw literal (values must fit unsigned long long to avoid NVCC warnings)
     expected[0]  = 0_i128;
     expected[1]  = 1_i128;
-    expected[2]  = 170141183460469231731687303715884105727_i128;
+    expected[2]  = 18446744073709551615_i128;
     expected[3]  = 999999999999999999_i128;
     expected[4]  = 42_i128;
 
-    // operator""_I128(const char*) - raw literal
+    // operator""_I128(const char*) - raw literal (values must fit unsigned long long to avoid NVCC warnings)
     expected[5]  = 0_I128;
     expected[6]  = 1_I128;
-    expected[7]  = 170141183460469231731687303715884105727_I128;
+    expected[7]  = 18446744073709551615_I128;
     expected[8]  = 999999999999999999_I128;
     expected[9]  = 42_I128;
 

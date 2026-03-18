@@ -36,13 +36,13 @@ __global__ void cuda_test(uint128_t *out)
     // operator""_u128(const char*) - raw literal
     if (i == 0) { out[i] = 0_u128; }
     if (i == 1) { out[i] = 1_u128; }
-    if (i == 2) { out[i] = 340282366920938463463374607431768211455_u128; }
+    if (i == 2) { out[i] = 18446744073709551615_u128; }
     if (i == 3) { out[i] = 999999999999999999_u128; }
 
     // operator""_U128(const char*) - raw literal
     if (i == 4) { out[i] = 0_U128; }
     if (i == 5) { out[i] = 1_U128; }
-    if (i == 6) { out[i] = 340282366920938463463374607431768211455_U128; }
+    if (i == 6) { out[i] = 18446744073709551615_U128; }
     if (i == 7) { out[i] = 999999999999999999_U128; }
 
     // operator""_u128(const char*, size_t) - string literal
@@ -99,13 +99,13 @@ int main(void)
     // operator""_u128(const char*) - raw literal
     expected[0]  = 0_u128;
     expected[1]  = 1_u128;
-    expected[2]  = 340282366920938463463374607431768211455_u128;
+    expected[2]  = 18446744073709551615_u128;
     expected[3]  = 999999999999999999_u128;
 
     // operator""_U128(const char*) - raw literal
     expected[4]  = 0_U128;
     expected[5]  = 1_U128;
-    expected[6]  = 340282366920938463463374607431768211455_U128;
+    expected[6]  = 18446744073709551615_U128;
     expected[7]  = 999999999999999999_U128;
 
     // operator""_u128(const char*, size_t) - string literal
