@@ -89,3 +89,6 @@ run test_unsigned_to_chars_bases.cu ;
 run test_signed_to_chars_bases.cu ;
 run test_unsigned_from_chars_bases.cu ;
 run test_signed_from_chars_bases.cu ;
+
+run test_unsigned_literals.cu ;
+run test_signed_literals.cu ;
