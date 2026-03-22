@@ -38,7 +38,7 @@ struct make_signed<int128::uint128_t> { using type = int128::int128_t; };
 template <>
 struct make_signed<int128::int128_t> { using type = int128::int128_t; };
 
-#ifdef __NVCC__
+#if defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA)
 
 template <>
 __host__ __device__ constexpr int128::uint128_t get_max_value<int128::uint128_t>()
@@ -54,7 +54,7 @@ __host__ __device__ constexpr int128::int128_t get_max_value<int128::int128_t>()
 
 #endif // __NVCC__
 
-#ifndef __NVCC__
+#if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 BOOST_INT128_INLINE_CONSTEXPR int128::uint128_t int128_pow10[39] =
 {
@@ -103,7 +103,7 @@ BOOST_INT128_INLINE_CONSTEXPR int128::uint128_t int128_pow10[39] =
 
 BOOST_INT128_HOST_DEVICE constexpr int num_digits(const int128::uint128_t& x) noexcept
 {
-    #ifdef __NVCC__
+    #if defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA)
 
     constexpr int128::uint128_t int128_pow10[39] =
     {
@@ -181,7 +181,7 @@ BOOST_INT128_HOST_DEVICE constexpr int num_digits(const int128::uint128_t& x) no
 
 BOOST_INT128_HOST_DEVICE BOOST_CHARCONV_CONSTEXPR to_chars_result to_chars(char* first, char* last, const int128::uint128_t value, const int base = 10) noexcept
 {
-    #ifndef __NVCC__
+    #if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
     if (base == 10)
     {
@@ -195,7 +195,7 @@ BOOST_INT128_HOST_DEVICE BOOST_CHARCONV_CONSTEXPR to_chars_result to_chars(char*
 
 BOOST_INT128_HOST_DEVICE BOOST_CHARCONV_CONSTEXPR to_chars_result to_chars(char* first, char* last, const int128::int128_t value, const int base = 10) noexcept
 {
-    #ifndef __NVCC__
+    #if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
     if (base == 10)
     {

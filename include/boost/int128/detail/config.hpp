@@ -285,7 +285,7 @@ using builtin_u128 = std::_Unsigned128;
 #  endif
 #endif
 
-#ifdef __NVCC__
+#if defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA)
 #  define BOOST_INT128_HOST_DEVICE __host__ __device__
 #else
 #  define BOOST_INT128_HOST_DEVICE

@@ -131,7 +131,7 @@ uint128_t
     BOOST_INT128_HOST_DEVICE explicit constexpr operator double() const noexcept;
 
     // long doubles do not exist on device
-    #ifndef __NVCC__
+    #if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
     explicit constexpr operator long double() const noexcept;
     #endif
 
@@ -299,7 +299,7 @@ BOOST_INT128_HOST_DEVICE constexpr uint128_t::operator double() const noexcept
     return static_cast<double>(high) * detail::offset_value_v<double> + static_cast<double>(low);
 }
 
-#ifndef __NVCC__
+#if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 constexpr uint128_t::operator long double() const noexcept
 {
