@@ -10,6 +10,12 @@
 
 #if __has_include(<boost/charconv.hpp>)
 
+// Define for the user automatically,
+// otherwise we'll have an ever-increasing number of these required as we go down the dependency chain
+#if defined(BOOST_INT128_ENABLE_CUDA) && !defined(BOOST_CHARCONV_ENABLE_CUDA)
+#  define BOOST_CHARCONV_ENABLE_CUDA
+#endif
+
 #include <boost/int128/int128.hpp>
 #include <boost/int128/literals.hpp>
 #include <boost/charconv.hpp>
