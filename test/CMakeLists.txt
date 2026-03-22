@@ -19,7 +19,7 @@ if(HAVE_BOOST_TEST)
 
         enable_testing()
 
-        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random Boost::charconv ${CUDA_LIBRARIES} INCLUDE_DIRECTORIES ${CUDA_INCLUDE_DIRS}  )
+        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random Boost::charconv ${CUDA_LIBRARIES} COMPILE_DEFINITIONS BOOST_INT128_ENABLE_CUDA=1 INCLUDE_DIRECTORIES ${CUDA_INCLUDE_DIRS}  )
         
     else()
 
