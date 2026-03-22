@@ -307,6 +307,9 @@ Listed by analogous STL header.
 
 | xref:config.adoc#disable_exceptions[`BOOST_INT128_DISABLE_EXCEPTIONS`]
 | Disables exception throwing
+
+| xref:config.adoc#enable_cuda[`BOOST_INT128_ENABLE_CUDA`]
+| Enables CUDA support allowing the library types and functions to be run on both host and device
 |===
 
 ==== Automatic Configuration

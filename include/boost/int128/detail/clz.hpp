@@ -20,7 +20,7 @@ namespace detail {
 
 namespace impl {
 
-#ifndef __NVCC__
+#if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 // See: http://graphics.stanford.edu/~seander/bithacks.html#IntegerLogDeBruijn
 BOOST_INT128_INLINE_CONSTEXPR int index64[64] = {
@@ -38,7 +38,7 @@ BOOST_INT128_INLINE_CONSTEXPR int index64[64] = {
 
 BOOST_INT128_HOST_DEVICE constexpr int bit_scan_reverse(std::uint64_t bb) noexcept
 {
-    #ifdef __NVCC__
+    #if defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA)
 
     constexpr int index64[64] = {
         0, 47,  1, 56, 48, 27,  2, 60,
@@ -67,7 +67,7 @@ BOOST_INT128_HOST_DEVICE constexpr int bit_scan_reverse(std::uint64_t bb) noexce
     return index64[(bb * debruijn64) >> 58];
 }
 
-#ifndef __NVCC__
+#if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 BOOST_INT128_INLINE_CONSTEXPR int countl_mod37[37] = {
     32, 31, 6, 30, 9, 5, 0, 29,
@@ -81,7 +81,7 @@ BOOST_INT128_INLINE_CONSTEXPR int countl_mod37[37] = {
 
 BOOST_INT128_HOST_DEVICE constexpr int backup_countl_impl(std::uint32_t x) noexcept
 {
-    #ifdef __NVCC__
+    #if defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA)
 
     constexpr int countl_mod37[37] = {
         32, 31, 6, 30, 9, 5, 0, 29,
@@ -102,7 +102,7 @@ BOOST_INT128_HOST_DEVICE constexpr int backup_countl_impl(std::uint32_t x) noexc
     return countl_mod37[x % 37];
 }
 
-#if BOOST_INT128_HAS_BUILTIN(__builtin_clz) && !defined(__NVCC__)
+#if BOOST_INT128_HAS_BUILTIN(__builtin_clz) && !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 constexpr int countl_impl(unsigned int x) noexcept
 {
@@ -119,7 +119,7 @@ constexpr int countl_impl(unsigned long long x) noexcept
     return x ? __builtin_clzll(x) : std::numeric_limits<unsigned long long>::digits;
 }
 
-#elif (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !defined(__NVCC__)
+#elif (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 constexpr int countl_impl(std::uint32_t x) noexcept
 {

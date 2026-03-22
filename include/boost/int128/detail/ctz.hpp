@@ -20,7 +20,7 @@ namespace detail {
 
 namespace impl {
 
-#if BOOST_INT128_HAS_BUILTIN(__builtin_ctz) && !defined(__NVCC__)
+#if BOOST_INT128_HAS_BUILTIN(__builtin_ctz) && !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 constexpr int countr_impl(unsigned int x) noexcept
 {
@@ -39,7 +39,7 @@ constexpr int countr_impl(unsigned long long x) noexcept
 
 #endif
 
-#ifndef __NVCC__
+#if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 BOOST_INT128_INLINE_CONSTEXPR int countr_mod37[37] = {
     32, 0, 1, 26, 2, 23, 27, 0,
@@ -79,7 +79,7 @@ constexpr int countr_impl(std::uint32_t x) noexcept
 
 #pragma warning(pop)
 
-#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) || defined(__NVCC__)
+#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) || (defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -88,7 +88,7 @@ constexpr int countr_impl(std::uint32_t x) noexcept
 
 BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
 {
-    #ifdef __NVCC__
+    #if defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA)
 
     constexpr int countr_mod37[37] = {
         32, 0, 1, 26, 2, 23, 27, 0,
@@ -109,7 +109,7 @@ BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint32_t x) noexcept
 
 #endif
 
-#if (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) && !defined(__NVCC__)
+#if (defined(_M_AMD64) || defined(_M_ARM64)) && !defined(BOOST_INT128_NO_CONSTEVAL_DETECTION) && !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) && !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 constexpr int countr_impl(std::uint64_t x) noexcept
 {
@@ -132,7 +132,7 @@ constexpr int countr_impl(std::uint64_t x) noexcept
     }
 }
 
-#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) || defined(__NVCC__)
+#elif !BOOST_INT128_HAS_BUILTIN(__builtin_ctz) || (defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 BOOST_INT128_HOST_DEVICE constexpr int countr_impl(std::uint64_t x) noexcept
 {

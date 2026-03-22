@@ -120,7 +120,7 @@ int128_t
     BOOST_INT128_HOST_DEVICE explicit constexpr operator double() const noexcept;
 
     // Long double does not exist on device
-    #ifndef __NVCC__
+    #if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
     explicit constexpr operator long double() const noexcept;
     #endif
 
@@ -297,7 +297,7 @@ BOOST_INT128_HOST_DEVICE constexpr int128_t::operator double() const noexcept
     return static_cast<double>(high) * detail::offset_value_v<double> + static_cast<double>(low);
 }
 
-#ifndef __NVCC__
+#if !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
 constexpr int128_t::operator long double() const noexcept
 {
@@ -2266,7 +2266,7 @@ BOOST_INT128_HOST_DEVICE BOOST_INT128_FORCE_INLINE constexpr int128_t library_su
 
 BOOST_INT128_HOST_DEVICE BOOST_INT128_FORCE_INLINE constexpr int128_t default_sub(const int128_t lhs, const int128_t rhs) noexcept
 {
-    #if defined(BOOST_INT128_HAS_BUILTIN_SUB_OVERFLOW) && (!defined(__aarch64__) || defined(__APPLE__) || !defined(BOOST_INT128_HAS_INT128)) && !defined(__NVCC__)
+    #if defined(BOOST_INT128_HAS_BUILTIN_SUB_OVERFLOW) && (!defined(__aarch64__) || defined(__APPLE__) || !defined(BOOST_INT128_HAS_INT128)) && !(defined(__CUDACC__) && defined(BOOST_INT128_ENABLE_CUDA))
 
     // __builtin_sub_overflow is marked constexpr so we don't need if consteval handling
     std::uint64_t result_low {};
