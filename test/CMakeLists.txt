@@ -13,13 +13,13 @@ if(HAVE_BOOST_TEST)
 
         message(STATUS "Building Boost.int128 with CUDA")
 
-        find_package(CUDA REQUIRED)
         enable_language(CUDA)
+        find_package(CUDAToolkit REQUIRED)
         set(CMAKE_CUDA_EXTENSIONS OFF)
 
         enable_testing()
 
-        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random Boost::charconv ${CUDA_LIBRARIES} COMPILE_DEFINITIONS BOOST_INT128_ENABLE_CUDA=1 INCLUDE_DIRECTORIES ${CUDA_INCLUDE_DIRS}  )
+        boost_test_jamfile(FILE cuda_jamfile LINK_LIBRARIES Boost::int128 Boost::random Boost::charconv CUDA::cudart COMPILE_DEFINITIONS BOOST_INT128_ENABLE_CUDA=1  )
         
     else()
 
